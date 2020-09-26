@@ -36,7 +36,21 @@
 .btnwblacktext{
    color: black;
 }
+.btnwblacktext:hover {
+   text-decoration: none;
+   color: black;
+ }
 
 #loader{
    display: none;
 }
+
+.giftTaken{
+   text-decoration: line-through;
+   color: black;
+}
+.giftTaken:hover {
+   text-decoration: none;
+   color: black;
+   text-decoration: line-through;
+ }
