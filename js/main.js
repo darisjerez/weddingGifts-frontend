@@ -13,8 +13,9 @@ function saveName(name){
 const guestName = () => localStorage.getItem('guest');
 
 (function weddingCountdown(){
-  // Set the date we're counting down to
+
 const countDownDate = new Date("Dec 12, 2020 08:30:25").getTime();
+
 const x = setInterval(function() {
   const now = new Date().getTime();
 
