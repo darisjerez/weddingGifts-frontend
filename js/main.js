@@ -4,21 +4,33 @@ const giftList = document.getElementById('gift-list-container');
 const loader = document.getElementById('loader');
 const nameInput = document.getElementById('nameInput');
 const accordion = document.getElementById('accordionExample');
-import { appContants } from './helpers.js'
+
+
 
 
 function saveName(name){
     return localStorage.setItem('guest', name);
 }
-
+async function AddOwner(id){
+    const data = {
+        "owner": "elshalval",
+        "taken": true
+    }
+    const serviceCall = await fetch(`https://wedding-gift-nestjs.herokuapp.com/gifts/${id}`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {"Content-Type": "application/json"}
+    });
+    const serviceResponse = await serviceCall.json();
+   await console.log(`Service response: ${serviceResponse}`);
+}
 async function retrieveGiftData(){
     const dataRetriever = await fetch("https://wedding-gift-nestjs.herokuapp.com/gifts");
     const dataFormatted = await dataRetriever.json();
     await generateList(dataFormatted);
 }
-function generateList(array){
-    for (let index = 0; index < array.length; index++) {
-        const element = array[index];
+function generateList(dataArray){
+    dataArray.forEach((element, index)=>{
         const htmlElementTemplate = `
         <div class="card">
         <div class="card-header" id="heading${index}">
@@ -28,16 +40,16 @@ function generateList(array){
             </button>
           </h2>
         </div>
-    
+        
         <div id="collapse${index}" class="collapse" aria-labelledby="heading${index}" data-parent="#accordionExample">
           <div class="card-body">
-          ...
+          ${!element.taken ? `<button type="button" class="btn btn-outline-success" onclick="AddOwner(${element._id})">Tomar!</button>`: 'Tomando por: '+ element.owner}
           </div>
         </div>
       </div>
         `;
         accordion.insertAdjacentHTML('beforeend', htmlElementTemplate);
-    }
+    });
 }
 openBtn.onclick = ()=>{
     if(nameInput.value === ""){
