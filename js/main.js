@@ -6,8 +6,6 @@ const nameInput = document.getElementById('nameInput');
 const accordion = document.getElementById('accordionExample');
 
 
-
-
 function saveName(name){
     return localStorage.setItem('guest', name);
 }
@@ -43,7 +41,7 @@ function generateList(dataArray){
         
         <div id="collapse${index}" class="collapse" aria-labelledby="heading${index}" data-parent="#accordionExample">
           <div class="card-body">
-          ${!element.taken ? `<button type="button" class="btn btn-outline-success" onclick="AddOwner(${element._id})">Tomar!</button>`: 'Tomando por: '+ element.owner}
+          ${!element.taken ? `<button type="button" class="btn btn-outline-success" onclick="AddOwner('${element._id}')">Tomar!</button>`: 'Tomando por: '+ element.owner}
           </div>
         </div>
       </div>
