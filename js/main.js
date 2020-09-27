@@ -54,14 +54,13 @@ async function AddOwner(id){
         counter--;
         alerts.innerHTML = `${serviceResponse.message}. Esta pagina se refrescará en ${counter}`;
         if (counter == 0) {
-            // Display a login box
             clearInterval(interval);
             location.reload();
         }
     }, 1000);
     })();
-    document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    document.body.scrollTop = 0; 
+    document.documentElement.scrollTop = 0; 
 } 
 async function retrieveGiftData(){
     const dataRetriever = await fetch("https://wedding-gift-nestjs.herokuapp.com/gifts");
@@ -75,14 +74,14 @@ function generateList(dataArray){
         <div class="card-header" id="heading${index}">
           <h2 class="mb-0">
             <button class="btn btn-link btn-block ${element.taken ? 'giftTaken':'btnwblacktext'} ${!element.taken ? 'bg-info':'bg-danger'} text-left" type="button" data-toggle="collapse" data-target="#collapse${index}" aria-expanded="true" aria-controls="collapse${index}">
-              ${element.name} <span class="badge badge-light">${element.quantity !== undefined ? element.quantity : 'Tu elección'}</span>
+              ${element.name} <span class="badge badge-light">${element.taken ? 'No Disponible' : 'Disponible'}</span>
             </button>
           </h2>
         </div>
         
         <div id="collapse${index}" class="collapse" aria-labelledby="heading${index}" data-parent="#accordionExample">
           <div class="card-body">
-          ${!element.taken ? `<button type="button" class="btn btn-outline-success" onclick="AddOwner('${element._id}')">Tomar!</button>`: 'Tomado por: '+ element.owner}
+          ${!element.taken ? `<button type="button" class="btn btn-outline-success" onclick="AddOwner('${element._id}')">Tomar!</button> A Nombre de: <strong>${guestName()}</strong>`: 'Tomado por: '+ element.owner}
           </div>
         </div>
       </div>
@@ -101,9 +100,7 @@ openBtn.onclick = ()=>{
         setTimeout(()=>{
         loader.style.display = "none";
         giftList.style.display = "block";
-        }, 3000);
-
-        
+        }, 3000);  
     }
     
 }
